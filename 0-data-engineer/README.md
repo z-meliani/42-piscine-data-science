@@ -1,6 +1,6 @@
 # Piscine Data Science - Data Engineer
 
-The `Data Engineer` project is a light entry project to database creation and manipulation where you setup a PostgresSQL database within a container and creates tables fron CSV files.
+The `Data Engineer` project is a light entry project to database creation and manipulation where you setup a PostgresSQL database within a container and creates tables from CSV files.
 
 ## 🏗️ Project Architecture
 
