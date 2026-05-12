@@ -29,9 +29,9 @@ services:
       start_period: 10s
 
 
-  adminer:
-    image: adminer:latest
-    container_name: adminer
+  dbgate:
+    image: dbgate/dbgate
+    container_name: dbgate
     restart: unless-stopped
 
     depends_on:
@@ -39,13 +39,21 @@ services:
         condition: service_healthy
 
     ports:
-      - "8080:8080"
+      - "8080:3000"
     networks:
       - db
       - gui
 
     environment:
-      ADMINER_DEFAULT_SERVER: postgres
+      CONNECTIONS: con1
+
+      LABEL_con1: PostgreSQL
+      SERVER_con1: postgres
+      PORT_con1: 5432
+      ENGINE_con1: postgres@dbgate-plugin-postgres
+      USER_con1: ${POSTGRES_USER}
+      DATABASE_con1: ${POSTGRES_DB}
+      PASSWORD_MODE_con1: askPassword
 
 
 networks:
