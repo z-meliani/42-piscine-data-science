@@ -1,0 +1,70 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: unless-stopped
+
+    networks:
+      - db
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    volumes:
+      - ./data:/data
+      - ./src/ex00/prep_tables.sh:/usr/local/bin/prep_tables.sh
+      - ./src/ex01/customers_table.sh:/usr/local/bin/customers_table.sh
+      - ./src/ex02/remove_duplicates.sh:/usr/local/bin/remove_duplicates.sh
+      - ./src/ex03/fusion.sh:/usr/local/bin/fusion.sh
+
+    secrets:
+      - postgres_password
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
+  dbgate:
+    image: dbgate/dbgate
+    container_name: dbgate
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    ports:
+      - "8080:3000"
+    networks:
+      - db
+      - gui
+
+    environment:
+      CONNECTIONS: con1
+
+      LABEL_con1: PostgreSQL
+      SERVER_con1: postgres
+      PORT_con1: 5432
+      ENGINE_con1: postgres@dbgate-plugin-postgres
+      USER_con1: ${POSTGRES_USER}
+      DATABASE_con1: ${POSTGRES_DB}
+      PASSWORD_MODE_con1: askPassword
+
+
+networks:
+  db:
+    driver: bridge
+    internal: true
+  gui:
+    driver: bridge
+
+
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt
