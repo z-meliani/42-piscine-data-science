@@ -1,0 +1,12 @@
+[project]
+name = "3-data-scientist-part-1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.9",
+    "pandas>=3.0.3",
+    "scipy>=1.17.1",
+]

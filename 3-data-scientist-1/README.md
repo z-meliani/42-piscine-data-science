@@ -1,0 +1,51 @@
+# Piscine Data Science - Data Scientist 1
+
+The `Data Scientist part 1` project lets you explore the foundations of data science, including data correlation factors, dataset splitting, and data standardization.
+
+
+## 🏗️ Project Architecture
+
+```bash
+.
+├── .venv/
+├── data/
+│   ├── Test_knight.csv
+│   └── Train_knight.csv
+├── src/
+│   ├── ex00
+│   ...
+│   └── ex05
+├── config.sh
+├── pyproject.toml
+├── requirements.txt
+└── uv.lock
+```
+
+## ⚙️ Setup
+
+**<ins>Option 1:</ins>** Using `uv`
+```bash
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create a virtual environment and install dependencies from pyproject.toml
+uv sync
+
+# Activate the virtual environment
+source .venv/bin/activate
+```
+
+**<ins>Option 2:</ins>** Using `pip` and `venv`:
+```bash
+./config.sh
+```
+
+## ▶️ How to run
+```bash
+
+# Activate the virtual environment
+source ./venv/bin/activate
+
+# Open the notebooks interface
+jupyter-lab
+```
